@@ -6,99 +6,56 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static StringBuilder log = new StringBuilder();
 
-        StringBuilder log = new StringBuilder();
-
-        File dirSrc = new File("H://Games/src");
-        if (dirSrc.mkdir()) {
-            log.append("Создана директория H://Games/src");
+    public static void creatorDir(String name) {
+        File newDir = new File(name);
+        if (newDir.mkdir()) {
+            log.append("Создана директория " + name);
             log.append("\n");
         }
+    }
 
-        File dirRes = new File("H://Games/res");
-        if (dirRes.mkdir()) {
-            log.append("Создана директория H://Games/res");
-            log.append("\n");
-        }
-
-        File dirSavegames = new File("H://Games/savegames");
-        if (dirSavegames.mkdir()) {
-            log.append("Создана директория H://Games/savegames");
-            log.append("\n");
-        }
-
-        File dirTemp = new File("H://Games/temp");
-        if (dirTemp.mkdir()) {
-            log.append("Создана директория H://Games/temp");
-            log.append("\n");
-        }
-
-        File dirMain = new File("H://Games/src/main");
-        if (dirMain.mkdir()) {
-            log.append("Создана директория H://Games/src/main");
-            log.append("\n");
-        }
-
-        File dirTest = new File("H://Games/src/test");
-        if (dirTest.mkdir()) {
-            log.append("Создана директория H://Games/src/test");
-            log.append("\n");
-        }
-
-        File fileMain = new File(dirMain, "Main.java");
+    public static void creatorFile(String dir, String name) {
+        File newFile = new File(dir, name);
         try {
-            if (fileMain.createNewFile()) {
-                log.append("Создан файл H://Games/src/main/main.java");
+            if (newFile.createNewFile()) {
+                log.append("Создан файл " + dir + name);
                 log.append("\n");
             }
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
+    }
 
-        File fileUtils = new File(dirMain, "Utils.java");
-        try {
-            if (fileUtils.createNewFile()) {
-                log.append("Создан файл H://Games/src/main/Utils.java");
-                log.append("\n");
-            }
-        } catch (IOException exception) {
-            System.out.println(exception.getMessage());
-        }
-
-        File dirDrawables = new File("H://Games/res/drawables");
-        if (dirDrawables.mkdir()) {
-            log.append("Создана директория H://Games/res/drawables");
-            log.append("\n");
-        }
-
-        File dirVectors = new File("H://Games/res/vectors");
-        if (dirVectors.mkdir()) {
-            log.append("Создана директория H://Games/res/vectors");
-            log.append("\n");
-        }
-
-        File dirIcons = new File("H://Games/res/icons");
-        if (dirIcons.mkdir()) {
-            log.append("Создана директория H://Games/res/icons");
-            log.append("\n");
-        }
-
-        File fileTemp = new File(dirTemp, "temp.txt");
-        try {
-            if (fileTemp.createNewFile()) {
-                log.append("Создан файл H://Games/temp/temp.txt");
-                log.append("\n");
-            }
-        } catch (IOException exception) {
-            System.out.println(exception.getMessage());
-        }
-
-        try (FileWriter writer = new FileWriter(fileTemp, false)) {
+    public static void saveLog(String nameFileLog) {
+        try (FileWriter writer = new FileWriter(nameFileLog, false)) {
             writer.write(log.toString());
             writer.flush();
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
+    }
+
+    public static void main(String[] args) {
+
+        creatorDir("H://Games");
+        creatorDir("H://Games/src");
+        creatorDir("H://Games/res");
+        creatorDir("H://Games/savegames");
+        creatorDir("H://Games/temp");
+        creatorDir("H://Games/src/main");
+        creatorDir("H://Games/src/test");
+
+        creatorFile("H://Games/src", "Main.java");
+        creatorFile("H://Games/src", "Utils.java");
+
+        creatorDir("H://Games/res/drawables");
+        creatorDir("H://Games/res/vectors");
+        creatorDir("H://Games/res/icons");
+
+        creatorFile("H://Games/temp", "temp.txt");
+
+        saveLog("H://Games/temp/temp.txt");
     }
 }
